@@ -1,4 +1,6 @@
-<img src="screenshots/logo.png" alt="The Claude Logo" width="600">
+<div align="center">
+  <img src="screenshots/logo.png" alt="The Claude Logo" width="400">
+</div>
 
 # 🦾 The Claude
 
