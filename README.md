@@ -6,7 +6,18 @@
 
 **Claude Code File Recovery Tool**
 
-Like the claw from Toy Story, The Claude reaches deep into your Claude Code conversation logs to rescue files that have been lost, deleted, or accidentally overwritten. It's a slick Python tool that automatically scans your `~/.claude/projects` directory and helps you recover any files that were created or modified during your Claude Code sessions.
+## 🚨 You Know This Feeling...
+
+You've been **absolutely crushing it** with Claude Code for 2 hours:
+- ✨ Created 12 files for your sick new project
+- 🔥 Built that perfect API structure that just *clicks*
+- 🎯 "I'll commit this shit in a minute..."
+- 💥 **Accidentally nuke the whole directory**
+- 😱 **"OH NO! My entire session is GONE!"**
+
+**Stop panicking.** Claude Code logs everything. The Claude gets it back.
+
+Like the claw from Toy Story, it reaches deep into your conversation logs and rescues your files from the digital void. Your flow-state coding session isn't lost - it's just waiting to be recovered.
 
 ## ✨ Features
 

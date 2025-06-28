@@ -43,8 +43,11 @@ dmypy.json
 .env
 .env.local
 
-# Project documentation
-IDEA.md
+# Claude Code internal files
+.claude/
+APP_CONTEXT.md
+CLAUDE.md
+CLAUDE.local.md
 
 # Recovered files
 recovered-files/
