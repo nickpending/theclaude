@@ -141,24 +141,25 @@ def scan(
     # Show files table
     table = Table(title="💾 Recoverable Files")
     table.add_column("#", width=3, justify="right", style="dim")
-    table.add_column("File", style="cyan")
-    table.add_column("Type", style="green", no_wrap=True)
-    table.add_column("Operation", justify="center", style="magenta")
-    table.add_column("Size", justify="right", style="yellow")
+    table.add_column("File", style="cyan", min_width=25, max_width=50)
+    table.add_column("Type", style="green", no_wrap=True, width=15)
+    table.add_column("Operation", justify="center", style="magenta", width=10)
+    table.add_column("Size", justify="right", width=8)
     if preview:
         table.add_column("Preview", style="dim", max_width=40)
     table.add_column("Date", style="blue")
     table.add_column("Conversation", style="dim", no_wrap=True)
     
     for i, file_record in enumerate(files[:limit], 1):
-        # Truncate long file paths for display, keeping filename visible
-        display_path = file_record.file_path
-        if len(display_path) > 80:
-            # Always show the filename by truncating from the beginning
+        # Use project-relative path for cleaner display
+        display_path = file_record.relative_path
+        
+        # Fallback truncation if relative path is still too long
+        if len(display_path) > 60:
             filename = Path(display_path).name
             parent_path = str(Path(display_path).parent)
-            if len(parent_path) > 60:
-                display_path = f"...{parent_path[-40:]}/{filename}"
+            if len(parent_path) > 40:
+                display_path = f"...{parent_path[-30:]}/{filename}"
             else:
                 display_path = f"{parent_path}/{filename}"
         
@@ -172,17 +173,24 @@ def scan(
         
         operation = Text(file_record.operation_type, style=op_style)
         
-        # Add version indicator if file has multiple versions
+        # Add version indicator if file has multiple versions with highlighting
         file_type_display = file_record.file_type
         if hasattr(file_record, '_version_count'):
-            file_type_display += f" ({file_record._version_count}v)"
+            version_text = f" ({file_record._version_count}v)"
+            file_type_display = Text(file_record.file_type)
+            file_type_display.append(version_text, style="bold yellow")
+        else:
+            file_type_display = file_record.file_type
+        
+        # Create colored size text
+        size_text = Text(file_record.size_human, style=file_record.size_color)
         
         row_data = [
             str(i),
             display_path,
             file_type_display,
             operation,
-            file_record.size_human,
+            size_text,
         ]
         
         if preview:

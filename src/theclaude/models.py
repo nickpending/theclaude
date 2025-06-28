@@ -28,10 +28,27 @@ class FileRecord:
     def relative_path(self) -> str:
         """Get path relative to project root if possible."""
         path = Path(self.file_path)
-        if str(path).startswith('/Users/rudy/development/projects/'):
-            # Try to make it relative to the project
-            return str(path).split('/')[-3:]  # Take last 3 parts typically
-        return str(path)
+        
+        # Try to make it relative to common project structures
+        parts = path.parts
+        
+        # Look for common project root indicators
+        project_indicators = [
+            'src', 'lib', 'app', 'components', 'pages', 'api', 'utils', 'tests', 'docs'
+        ]
+        
+        for i, part in enumerate(parts):
+            if part in project_indicators and i > 0:
+                # Take everything from the indicator onwards
+                return str(Path(*parts[i:]))
+        
+        # If no project structure found, try to get last 2-3 meaningful parts
+        if len(parts) > 3:
+            return str(Path(*parts[-3:]))
+        elif len(parts) > 1:
+            return str(Path(*parts[-2:]))
+        
+        return path.name
     
     @property
     def size_human(self) -> str:
@@ -42,6 +59,16 @@ class FileRecord:
             return f"{self.size_bytes / 1024:.1f}KB"
         else:
             return f"{self.size_bytes / (1024 * 1024):.1f}MB"
+    
+    @property
+    def size_color(self) -> str:
+        """Color for file size based on size thresholds."""
+        if self.size_bytes > 100 * 1024:  # > 100KB
+            return "red"
+        elif self.size_bytes > 10 * 1024:  # > 10KB
+            return "yellow"
+        else:
+            return "green"
     
     @property
     def timestamp_human(self) -> str:
