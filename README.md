@@ -1,4 +1,4 @@
-![The Claude Logo](screenshots/logo.png)
+<img src="screenshots/logo.png" alt="The Claude Logo" width="600">
 
 # 🦾 The Claude
 
