@@ -151,10 +151,16 @@ def scan(
     table.add_column("Conversation", style="dim", no_wrap=True)
     
     for i, file_record in enumerate(files[:limit], 1):
-        # Truncate long file paths for display
+        # Truncate long file paths for display, keeping filename visible
         display_path = file_record.file_path
-        if len(display_path) > 60:
-            display_path = "..." + display_path[-57:]
+        if len(display_path) > 80:
+            # Always show the filename by truncating from the beginning
+            filename = Path(display_path).name
+            parent_path = str(Path(display_path).parent)
+            if len(parent_path) > 60:
+                display_path = f"...{parent_path[-40:]}/{filename}"
+            else:
+                display_path = f"{parent_path}/{filename}"
         
         # Color code operation types
         op_style = {
