@@ -1,3 +1,5 @@
+![The Claude Logo](screenshots/logo.png)
+
 # 🦾 The Claude
 
 **Claude Code File Recovery Tool**
